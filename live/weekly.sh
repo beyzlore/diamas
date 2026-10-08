@@ -11,8 +11,8 @@ top=[t for t in u.index if t not in D.ETFS][:60]; tk=sorted(set(top)|{'SPY','QQQ
   "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --disable-gpu --no-pdf-header-footer \
      --virtual-time-budget=5000 --window-size=760,1200 --print-to-pdf="$PWD/rapor/Strateji_Arastirma_Raporu.pdf" "file://$PWD/rapor/rapor_print.html" &&
   $PY live/run_live.py --offline &&
-  osascript -e 'display notification "Haftalık araştırma ve PDF rapor yenilendi." with title "Trade Takip" sound name "Glass"' &&
+  osascript -e 'display notification "Haftalık araştırma ve PDF rapor yenilendi." with title "Diamas" sound name "Glass"' &&
   echo "[$(date '+%Y-%m-%d %H:%M')] haftalık bitti" || {
-  osascript -e 'display notification "Haftalık yenilemede hata oluştu, logs/weekly.log dosyasına bakın." with title "Trade Takip HATASI"'
+  osascript -e 'display notification "Haftalık yenilemede hata oluştu, logs/weekly.log dosyasına bakın." with title "Diamas HATASI"'
   echo "[$(date '+%Y-%m-%d %H:%M')] HATA"; }
 } >> logs/weekly.log 2>&1

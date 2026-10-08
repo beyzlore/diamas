@@ -1,4 +1,4 @@
-"""Günlük takip: veriyi güncelle -> sanal portföyü yeniden hesapla -> panoyu (Trade Takip) üret -> bildirim gönder.
+"""Günlük takip: veriyi güncelle -> sanal portföyü yeniden hesapla -> panoyu (Diamas) üret -> bildirim gönder.
 
 Kullanım:
   .venv/bin/python live/run_live.py            # tam güncelleme (internetten veri indirir)
@@ -276,10 +276,10 @@ def main():
             msg += " AL: " + ", ".join(buys[:5])
         log(f"tamam ({asof:%Y-%m-%d}) {msg}")
         if not offline:
-            notify("Trade Takip güncellendi", msg)
+            notify("Diamas güncellendi", msg)
     except Exception as ex:  # noqa: BLE001
         log("HATA: " + "".join(traceback.format_exception(ex))[-1500:])
-        notify("Trade Takip HATASI", str(ex)[:120])
+        notify("Diamas HATASI", str(ex)[:120])
         raise
 
 

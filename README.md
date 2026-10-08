@@ -1,4 +1,4 @@
-# Strateji Araştırma Sistemi
+# Diamas: Strateji Araştırma ve Takip Sistemi
 
 ABD hisse ve ETF'leri için kuralları açık stratejileri geçmiş veride test eden araştırma düzeneği.
 Yatırım tavsiyesi değildir.

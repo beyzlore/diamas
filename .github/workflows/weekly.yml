@@ -8,7 +8,7 @@ permissions:
   pages: write
   id-token: write
 concurrency:
-  group: trade-takip
+  group: diamas
   cancel-in-progress: false
 jobs:
   research:
@@ -23,7 +23,7 @@ jobs:
         run: bash cloud/weekly.sh
       - name: Sonuçları kaydet
         run: |
-          git config user.name "trade-takip-bot"
+          git config user.name "diamas-bot"
           git config user.email "actions@users.noreply.github.com"
           git add results/ data/earnings.parquet data/fomc.parquet data/vix.parquet data/sp500.parquet data/universe.parquet rapor/
           git commit -m "Haftalık araştırma $(date -u +%F)" || echo "değişiklik yok"

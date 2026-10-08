@@ -5,4 +5,5 @@ rm -rf site && mkdir -p site
 cp rapor/takip.html site/index.html
 cp rapor/rapor.html site/rapor.html
 cp rapor/Strateji_Arastirma_Raporu.pdf site/ 2>/dev/null || true
+cp live/icon.png site/icon.png
 touch site/.nojekyll
