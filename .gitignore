@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+data/daily.parquet
+data/intraday_*.parquet
+data/_earn_tmp.parquet
+results/daily_test*.pkl
+logs/
+site/
+.DS_Store

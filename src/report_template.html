@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Strateji Araştırma Raporu</title>
+<style>
+:root {
+  color-scheme: light;
+  --bg: #f7f6f3; --surface: #fcfcfb; --surface-2: #f0efec; --line: #e2e0da;
+  --text: #0b0b0b; --text-2: #52514e; --muted: #7a7974;
+  --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a; --s4: #4a3aa7; --bench: #8a8984;
+  --good: #0ca30c; --good-ink: #006300; --warn: #fab219; --warn-ink: #7a5200; --bad: #d03b3b; --bad-ink: #a82828;
+  --pos-bg: #dceafb; --neg-bg: #fbe1e0;
+  --band-1: rgba(42,120,214,.05); --band-2: rgba(27,175,122,.07); --band-3: rgba(235,104,52,.08);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #121211; --surface: #1a1a19; --surface-2: #232321; --line: #34332f;
+    --text: #ffffff; --text-2: #c3c2b7; --muted: #8f8e86;
+    --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #9085e9; --bench: #8f8e86;
+    --good-ink: #5fd35f; --warn-ink: #fab219; --bad-ink: #f07a7a;
+    --pos-bg: #183454; --neg-bg: #4a1f1f;
+    --band-1: rgba(57,135,229,.07); --band-2: rgba(25,158,112,.09); --band-3: rgba(217,89,38,.10);
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #121211; --surface: #1a1a19; --surface-2: #232321; --line: #34332f;
+  --text: #ffffff; --text-2: #c3c2b7; --muted: #8f8e86;
+  --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #9085e9; --bench: #8f8e86;
+  --good-ink: #5fd35f; --warn-ink: #fab219; --bad-ink: #f07a7a;
+  --pos-bg: #183454; --neg-bg: #4a1f1f;
+  --band-1: rgba(57,135,229,.07); --band-2: rgba(25,158,112,.09); --band-3: rgba(217,89,38,.10);
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text);
+  font: 15px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, sans-serif; }
+main { max-width: 1080px; margin: 0 auto; padding: 32px 16px 80px; }
+h1 { font-size: 30px; line-height: 1.2; margin: 0 0 6px; letter-spacing: -.01em; }
+h2 { font-size: 21px; margin: 48px 0 10px; padding-top: 8px; border-top: 1px solid var(--line); }
+h3 { font-size: 16px; margin: 22px 0 6px; }
+h4 { font-size: 13px; text-transform: uppercase; letter-spacing: .04em; color: var(--text-2); margin: 18px 0 6px; }
+p { margin: 8px 0; max-width: 78ch; }
+.lede { color: var(--text-2); font-size: 16px; }
+a { color: var(--s1); }
+.hero { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 12px; margin: 22px 0; }
+.tile { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
+.tile b { display: block; font-size: 28px; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.tile span { color: var(--text-2); font-size: 13px; }
+.callout { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--s1);
+  border-radius: 8px; padding: 14px 18px; margin: 16px 0; }
+.callout.warn { border-left-color: var(--warn); }
+.callout p { margin: 6px 0; }
+.scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+th, td { padding: 7px 10px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+th { font-weight: 600; color: var(--text-2); font-size: 12px; background: var(--surface-2); position: sticky; top: 0; }
+td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+td.name { font-weight: 600; white-space: nowrap; }
+td.lk, th.lk { background: color-mix(in srgb, var(--s2) 7%, transparent); }
+td.pos { background: var(--pos-bg); } td.neg { background: var(--neg-bg); }
+tbody tr:last-child td { border-bottom: 0; }
+.badge { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 700; padding: 2px 8px;
+  border-radius: 999px; white-space: nowrap; border: 1px solid; }
+.badge.good { color: var(--good-ink); border-color: var(--good); }
+.badge.warn { color: var(--warn-ink); border-color: var(--warn); }
+.badge.bad { color: var(--bad-ink); border-color: var(--bad); }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; margin: 10px 0; }
+.card > summary { cursor: pointer; padding: 12px 16px; display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; list-style: none; }
+.card > summary::-webkit-details-marker { display: none; }
+.card > summary::before { content: "▸"; color: var(--muted); }
+.card[open] > summary::before { content: "▾"; }
+.card .ttl { font-weight: 650; }
+.card .sub { color: var(--text-2); font-size: 13px; margin-left: auto; }
+.card .body { padding: 0 16px 16px; border-top: 1px solid var(--line); }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.checks { list-style: none; padding: 0; margin: 0; font-size: 14px; }
+.checks li { padding: 3px 0; } .checks li.ok span { color: var(--good-ink); font-weight: 700; } .checks li.no span { color: var(--bad-ink); font-weight: 700; }
+.checks li.no { color: var(--text-2); }
+.kv { display: grid; grid-template-columns: 1fr auto; gap: 4px 14px; margin: 0; font-size: 14px; }
+.kv dt { color: var(--text-2); } .kv dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+table.mini { font-size: 13px; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; margin: 6px 0; }
+.years { display: flex; flex-wrap: wrap; gap: 4px; }
+.yr { width: 52px; border-radius: 6px; padding: 4px 0; text-align: center; font-size: 11px; color: var(--text-2); }
+.yr b { display: block; color: var(--text); font-size: 12px; font-variant-numeric: tabular-nums; }
+.yr.pos { background: var(--pos-bg); } .yr.neg { background: var(--neg-bg); }
+details.inner summary { cursor: pointer; color: var(--s1); font-size: 13px; margin-top: 12px; }
+.lockline { background: color-mix(in srgb, var(--s2) 8%, transparent); border-radius: 8px; padding: 10px 12px; font-size: 14px; }
+.rule { font-size: 15px; }
+.chart-wrap { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 14px 8px; margin: 14px 0; position: relative; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; color: var(--text-2); margin-bottom: 6px; }
+.legend i { display: inline-block; width: 14px; height: 3px; border-radius: 2px; vertical-align: middle; margin-right: 6px; }
+svg text { fill: var(--muted); font-size: 11px; }
+.tip { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--line); border-radius: 8px;
+  padding: 8px 10px; font-size: 12.5px; box-shadow: 0 4px 16px rgba(0,0,0,.12); display: none; min-width: 200px; }
+.tip .d { color: var(--text-2); margin-bottom: 4px; }
+.tip .r { display: flex; justify-content: space-between; gap: 12px; } .tip .r b { font-variant-numeric: tabular-nums; }
+.tip i { display: inline-block; width: 10px; height: 3px; border-radius: 2px; margin-right: 6px; vertical-align: middle; }
+.timeline { display: flex; border-radius: 8px; overflow: hidden; font-size: 13px; margin: 10px 0; border: 1px solid var(--line); }
+.timeline div { padding: 10px 12px; } .timeline small { display: block; color: var(--text-2); }
+.gloss { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px 24px; }
+.gloss div { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 10px 14px; font-size: 14px; }
+.gloss b { display: block; }
+ol.steps li { margin: 6px 0; }
+@page { size: A4; margin: 12mm 10mm; }
+@media print {
+  :root, :root[data-theme="dark"] { color-scheme: light;
+    --bg: #ffffff; --surface: #ffffff; --surface-2: #f3f2ef; --line: #dcdad4;
+    --text: #0b0b0b; --text-2: #52514e; --muted: #7a7974;
+    --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a; --s4: #4a3aa7; --bench: #8a8984;
+    --good-ink: #006300; --warn-ink: #7a5200; --bad-ink: #a82828; --pos-bg: #dceafb; --neg-bg: #fbe1e0;
+    --band-1: rgba(42,120,214,.06); --band-2: rgba(27,175,122,.08); --band-3: rgba(235,104,52,.09); }
+  body { font-size: 11.5px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  p { max-width: none; }
+  .callout { font-size: 12px; }
+  th { white-space: normal; } td.name { white-space: normal; }
+  table.score { font-size: 8.5px; } table.score .badge { font-size: 8px; padding: 1px 5px; }
+  .card > summary { font-size: 13px; padding: 8px 12px; }
+  main { max-width: none; padding: 0; }
+  h1 { font-size: 22px; } h2 { font-size: 16px; margin-top: 22px; break-after: avoid; } h3, h4 { break-after: avoid; }
+  .scroll { overflow: visible; border: 0; }
+  table { font-size: 9px; } th, td { padding: 3px 5px; } th { position: static; }
+  tr, .tile, .callout, .gloss div, .chart-wrap, .kv, .checks, .years { break-inside: avoid; }
+  .card { break-inside: auto; border: 1px solid var(--line); }
+  .card > summary::before { content: ""; }
+  .card .sub { margin-left: 12px; }
+  .tip, details.inner { display: none !important; }
+  .hero { grid-template-columns: repeat(4, minmax(0,1fr)); }
+  .two { grid-template-columns: 1fr 1fr; }
+  .yr { width: 40px; }
+  a { color: inherit; text-decoration: none; }
+}
+@media (max-width: 720px) {
+  .hero { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .two, .gloss { grid-template-columns: 1fr; }
+  .card .sub { margin-left: 0; width: 100%; }
+  h1 { font-size: 24px; }
+  .timeline { flex-direction: column; }
+}
+</style>
+</head>
+<body>
+<main>
+<h1>Strateji Araştırma Raporu</h1>
+<p class="lede">ABD hisseleri ve ETF'ler · 2004 – Ekim 2026 günlük veri · son 2 yıl saatlik ve son 60 gün 5 dakikalık veri.
+Bu rapor bir yatırım tavsiyesi değildir. Geçmiş verilerle yapılmış testlerin dürüst bir dökümüdür.</p>
+
+<div class="hero">
+  <div class="tile"><b>{{N_STRAT}}</b><span>günlük strateji test edildi</span></div>
+  <div class="tile"><b>{{N_TRIALS}}</b><span>farklı ayar denendi</span></div>
+  <div class="tile"><b>{{N_PASS}}</b><span>tüm sert kontrolleri geçti</span></div>
+  <div class="tile"><b>{{N_FAIL}}</b><span>başarısız (gizlenmedi, aşağıda)</span></div>
+</div>
+
+<div class="callout">
+{{BOTTOM_LINE}}
+</div>
+
+<h2>1. Bu raporu nasıl okumalı?</h2>
+<div class="gloss">
+<div><b>Geriye dönük test (backtest)</b>Bir kuralı geçmiş fiyatlara uygulayıp "o kurala uysaydım ne olurdu?" diye bakmak.</div>
+<div><b>Sharpe oranı</b>Getirinin, yaşattığı dalgalanmaya oranı. 0'ın altı kötü, 0,5 makul, 1'in üstü çok iyi. Piyasayı al-tut yapmak uzun vadede yaklaşık 0,6–0,8 verir.</div>
+<div><b>Maksimum düşüş</b>Paranın bir zirveden sonra en fazla ne kadar eridiği. −%50: 100 lira 50'ye inmiş demek.</div>
+<div><b>Beklenen getiri (işlem başı)</b>Bir işlemden ortalama ne kazandığın, maliyetler düşüldükten sonra. Kazanma oranından daha önemlidir.</div>
+<div><b>Kayma ve spread</b>Alış ve satış fiyatı arasındaki fark ile emrin istediğin fiyattan biraz kötü dolması. Her işlemde gizli bir vergi gibidir; hepsi düşüldü.</div>
+<div><b>Aşırı uyum (overfitting)</b>Kuralı geçmişe o kadar iyi "terziliyorsun" ki gelecekte çalışmıyor. Bu raporun en çok uğraştığı şey bunu yakalamak.</div>
+<div><b>Eğitim / doğrulama / kilitli test</b>Ayar eğitim döneminde seçilir. Sonra hiç görmediği doğrulama döneminde sınanır. Kilitli dönem ise en sona kadar hiç açılmadı.</div>
+<div><b>İleriye yürüyen test</b>Her yıl, sadece önceki 6 yıla bakarak ayar seçip o yılı oynamak. Gerçek hayattaki kullanıma en yakın sınav.</div>
+</div>
+
+<h2>2. Yöntem: geleceği geçmişe sızdırmamak</h2>
+<div class="timeline">
+  <div style="flex:12;background:var(--band-1)"><b>Eğitim</b><small>2005 – 2016 · ayar burada seçilir</small></div>
+  <div style="flex:7;background:var(--band-2)"><b>Doğrulama</b><small>2017 – 2023 · karar burada verilir</small></div>
+  <div style="flex:3;background:var(--band-3)"><b>Kilitli test</b><small>2024 – bugün · en sonda bir kez açıldı</small></div>
+</div>
+<ul>
+<li><b>Sinyal dün kapanışta, işlem bugün açılışta.</b> Hiçbir kural o anda bilinmeyen bir fiyatı kullanmaz. Göstergeler (ortalama, ATR, RSI, hacim) yalnızca geçmiş günlerden hesaplanır.</li>
+<li><b>Zamana göre hisse evreni.</b> "En likit 100 hisse" listesi her ay o ana kadarki hacme göre yeniden kurulur. 2008'de bugünün yıldızları seçilmez.</li>
+<li><b>Maliyetler:</b> her alış ve satışta spread'in yarısı, 1 baz puan kayma (stop emirlerinde 3), hisse başı 0,005$ komisyon. Ayrıca maliyetler 2 ve 3 katına çıkarılarak tekrar test edildi.</li>
+<li><b>Şans düzeltmesi:</b> {{N_TRIALS}} deneme yapıldığı için bazı iyi sonuçlar tesadüf olabilir. "Deflated Sharpe" bunun olasılığını hesaplar.</li>
+<li><b>Sınırlar (dürüstçe):</b>
+  (1) Hisseler bugünkü S&amp;P 500 üyelerinden seçildi. İflas edip listeden çıkan şirketler veride yok, bu da hisse stratejilerini olduğundan iyi gösterir. Bu yüzden aynı kuralları hiç iflas etmeyen ETF'lerde de denedik.
+  (2) Gerçek alış-satış kotasyon verisi ücretsiz değil, spread likiditeye göre tahmin edildi.
+  (3) Ücretsiz dakikalık veri yalnızca son 60 günü kapsıyor, bu yüzden gün içi sonuçlar ön çalışma niteliğinde.
+  (4) Enflasyon (TÜFE) takvimi kaynağı otomatik indirmeye izin vermedi. Ekonomik takvimden yalnızca Fed (FOMC) kararları kullanıldı.</li>
+</ul>
+
+<h2>3. Hisse kalitesi: likidite, hacim, oynaklık, spread</h2>
+<p>{{N_UNI}} hisse ve ETF için son 1 yılın ortalamaları ölçüldü (ilk 25'i aşağıda). Günlük işlem hacmi düşük, spread'i geniş hisselerde maliyet kârı yer. Stratejiler bu yüzden yalnızca en likit hisselerle sınırlandı.</p>
+<div class="scroll"><table>
+<thead><tr><th>Sembol</th><th class="n">Fiyat</th><th class="n">Günlük hacim (milyon $)</th><th class="n">Yıllık oynaklık</th><th class="n">Günlük ort. aralık (ATR)</th><th class="n">Tahmini spread (bps)</th><th class="n">Ham spread tahmini* (bps)</th><th class="n">Ort. açılış boşluğu %</th></tr></thead>
+<tbody>{{UNI_ROWS}}</tbody></table></div>
+<p style="font-size:13px;color:var(--text-2)">* Fiyatlardan hesaplanan ham spread tahmini (Abdi–Ranaldo) çok likit hisselerde oynaklık yüzünden şişiyor. Örneğin SPY için ~20 bps veriyor, gerçekte ~0,3 bps. Bu yüzden maliyet hesabında likiditeye göre kalibre edilmiş, temkinli değer kullanıldı. 1 bps = %0,01.</p>
+
+<h2>4. Ani fiyat hareketine yol açan olaylar</h2>
+<div class="hero">
+  <div class="tile"><b>{{EARN_ABS}}</b><span>bilanço günü ortalama mutlak hareket (normal gün: {{NORM_ABS}})</span></div>
+  <div class="tile"><b>{{EARN_BIG}}</b><span>bilanço günlerinin %5'ten büyük hareket ettiği oran (normal: {{NORM_BIG}})</span></div>
+  <div class="tile"><b>{{TOP1_EARN}}</b><span>en sert %1'lik hareketlerin bilanço gününe denk gelen payı</span></div>
+  <div class="tile"><b>{{FOMC_ABS}}</b><span>Fed kararı günü SPY ortalama mutlak hareket (normal: {{SPY_ABS}})</span></div>
+</div>
+<p>{{EARN_TICKERS}} şirketin {{EARN_FIRST}} sonrasındaki bilanço tarihleri ve beklenti/gerçekleşen kârları toplandı. {{EARN_N}} bilanço tepki günü incelendi (2023 sonuna kadar). Sonuç açık: bilanço günleri, bir hissede ani ve büyük fiyat hareketinin en büyük kaynağı. Bu yüzden kısa vadeli stratejiler bilanço günlerini ya hedeflemeli ya da bilinçli olarak kaçınmalı.</p>
+<h3>Kâr sürprizi ile ilk gün tepkisi</h3>
+<div class="scroll"><table><thead><tr><th>Kâr sürprizi (beklentiye göre)</th><th class="n">Adet</th><th class="n">İlk gün ort. getiri</th><th class="n">Yükselme oranı</th></tr></thead><tbody>{{SURP_ROWS}}</tbody></table></div>
+<p>Fed (FOMC) karar günleri: {{FOMC_N}} gün. SPY ortalama getirisi karar günü {{FOMC_RET}}, diğer günler {{SPY_RET}}.</p>
+
+<h2>5. Sonuç tablosu: tüm stratejiler</h2>
+<p>Sayılar <b>doğrulama dönemine (2017–2023)</b> aittir. Ayar bu dönem görülmeden seçildi. Turuncu sütunlar kilitli testtir (2024–bugün). Karşılaştırma için: SPY al-tut doğrulamada Sharpe {{SPY_V_SR}}, yıllık {{SPY_V_RET}}, en büyük düşüş {{SPY_V_DD}}. Kilitli dönemde ise Sharpe {{SPY_L_SR}}, yıllık {{SPY_L_RET}}, en büyük düşüş {{SPY_L_DD}}.</p>
+<div class="scroll"><table class="score">
+<thead><tr><th>Strateji</th><th>Karar</th><th class="n">İşlem</th><th class="n">Kazanma oranı</th><th class="n">Ort. kâr</th><th class="n">Ort. zarar</th><th class="n">Beklenen getiri</th><th class="n">Maks. düşüş</th><th class="n">Sharpe</th><th class="n">Yıllık getiri</th><th class="n lk">Kilitli Sharpe</th><th class="n lk">Kilitli yıllık</th><th class="n lk">Kilitli düşüş</th></tr></thead>
+<tbody>{{SCORE_ROWS}}</tbody></table></div>
+<p style="font-size:13px;color:var(--text-2)"><b>Karar kuralı.</b> GEÇTİ için şu üçü zorunlu: doğrulamada Sharpe &gt; 0,5; maliyet 2 katına çıkınca bile kârlı; işlem başı getiri %95 güvenle sıfırdan büyük. Diğer kontrollerden de en fazla birinde kalabilir. ŞÜPHELİ: umut verici ama kanıt yetersiz. BAŞARISIZ: geri kalan her şey.</p>
+
+<h3>Para nasıl büyürdü? (1$ ile başlasaydın, logaritmik ölçek)</h3>
+<div class="chart-wrap" id="eqchart"><div class="legend" id="eqlegend"></div><div id="eqsvg"></div><div class="tip" id="eqtip"></div></div>
+<p>Geçen stratejilerin eşit karışımı: doğrulamada {{COMBO_V}}. Kilitli testte {{COMBO_L}}.</p>
+
+<h2>6. Umut veren stratejiler: ayrıntı</h2>
+<p>Her kartta stratejinin kuralı, geçtiği ve kaldığı kontroller, hangi piyasa koşullarında çalışmadığı, yıllara göre sonuçları ve kilitli test sonucu var.</p>
+{{CARDS_PASS}}
+
+<h2>7. Başarısız stratejiler ve nedenleri</h2>
+<p>Bunlar gizlenmedi. Bir şeyin işe yaramadığını bilmek de para kazandırır, çünkü kaybettirmez.</p>
+{{CARDS_FAIL}}
+
+<h2>8. Gün içi: Açılış Aralığı Kırılımı (ORB)</h2>
+<p><b>Kural:</b> Seansın ilk X dakikasındaki en yüksek ve en düşük fiyat belirlenir. Bu süre yükselişle kapandıysa, fiyat zirveyi kırınca alınır. Düşüşle kapandıysa, dip kırılınca açığa satılır. Zarar durdur seviyesi günlük ortalama aralığın (ATR) bir kesri kadar uzakta durur. Gün sonunda pozisyon kapatılır. "Stocks in Play" filtresi, açılışta hacmi normalin çok üstünde olan hisseleri seçer (Zarattini, Barbon &amp; Aziz, 2024).</p>
+<div class="callout warn"><p><b>Veri uyarısı:</b> Ücretsiz 5 dakikalık veri yalnızca son ~60 işlem gününü, saatlik veri son ~2 yılı kapsıyor. Bu kadar kısa bir dönemle güvenilir karar verilemez. Bu bölüm bir ön çalışmadır. Gerçek karar için Alpaca gibi bir kaynaktan yıllarca geriye giden dakikalık veri gerekir; Alpaca'nın ücretsiz hesabı bunu verir.</p></div>
+<div class="scroll"><table>
+<thead><tr><th>Test</th><th>Karar</th><th class="n">Gün</th><th>Seçilen ayar</th><th class="n">Eğitim işlem</th><th class="n">Eğitim Sharpe</th><th class="n">Doğr. işlem</th><th class="n">Doğr. kazanma</th><th class="n">Doğr. işlem başı</th><th class="n">Doğr. Sharpe</th><th class="n lk">Kilitli Sharpe</th><th class="n lk">Kilitli işlem başı</th></tr></thead>
+<tbody>{{INTRA_ROWS}}</tbody></table></div>
+
+<h2>9. Ne kadar almalı? Pozisyon büyüklüğü</h2>
+<p>Hangi hisse ve ne zaman sorusu kadar önemli olan soru: <b>ne kadar</b>. Çoğu kişi iyi bir stratejiyle bile pozisyonu fazla büyük tuttuğu için batar. Testlerde kullanılan kural basit: sermaye N eşit parçaya bölünür (örneğin RSI stratejisinde 10 parça). Tek bir işlem asla sermayenin 1/N'inden fazlasını almaz.</p>
+<div class="scroll"><table><thead><tr><th>Strateji</th><th class="n">Kelly oranı (teorik üst sınır)</th><th class="n">Yarım Kelly</th></tr></thead><tbody>{{KELLY_ROWS}}</tbody></table></div>
+<p style="font-size:13px;color:var(--text-2)">Kelly oranı, kazanma oranı ile ortalama kâr/zarar oranından "uzun vadede servetini en hızlı büyütecek" işlem başı payı hesaplar. Ancak geçmiş sonuçlar gerçekte daha kötü çıkar ve tam Kelly çok sert düşüşler yaşatır. Profesyoneller en fazla yarısını kullanır. Yeni başlayan biri için daha güvenli kural: <b>tek bir işlemde sermayenin %1'inden fazlasını riske atma.</b> Yani zarar durdur seviyesine gelirsen toplam paranın en fazla %1'ini kaybedecek kadar al.</p>
+
+<h2>10. Bundan sonra ne yapılmalı?</h2>
+<ol class="steps">{{NEXT_STEPS}}</ol>
+
+<p style="margin-top:40px;font-size:12px;color:var(--muted)">Veri: Yahoo Finance (günlük/gün içi fiyat, bilanço tarihleri, VIX), federalreserve.gov (FOMC takvimi), Wikipedia (S&amp;P 500 listesi). Kod: ~/Desktop/trade-arastirma. Bu rapor bilgilendirme amaçlıdır, yatırım tavsiyesi değildir.</p>
+</main>
+<script>
+(function(){
+const D = {{CHART}};
+const root = document.getElementById('eqsvg'), tip = document.getElementById('eqtip'), wrap = document.getElementById('eqchart');
+const leg = document.getElementById('eqlegend');
+D.series.forEach(s => { const e = document.createElement('span');
+  e.innerHTML = `<i style="background:var(--${s.cls === 'bench' ? 'bench' : s.cls})"></i>${s.name}`; leg.appendChild(e); });
+function draw(){
+  const W = root.clientWidth || 800, H = Math.max(260, Math.min(420, W * 0.5)), m = {l: 44, r: 12, t: 10, b: 24};
+  const n = D.dates.length, iw = W - m.l - m.r, ih = H - m.t - m.b;
+  let lo = Infinity, hi = -Infinity;
+  D.series.forEach(s => s.values.forEach(v => { if (v > 0) { lo = Math.min(lo, v); hi = Math.max(hi, v); } }));
+  lo = Math.log(lo * 0.95); hi = Math.log(hi * 1.05);
+  const x = i => m.l + i / (n - 1) * iw, y = v => m.t + (1 - (Math.log(v) - lo) / (hi - lo)) * ih;
+  const di = d => { let k = D.dates.findIndex(z => z >= d); return k < 0 ? n - 1 : k; };
+  let s = `<svg width="${W}" height="${H}" role="img" aria-label="Strateji büyüme eğrileri">`;
+  const bandc = ['var(--band-1)','var(--band-2)','var(--band-3)'];
+  D.bands.forEach((b, k) => { const a = x(di(b.from)), z = x(di(b.to)); s += `<rect x="${a}" y="${m.t}" width="${Math.max(0, z - a)}" height="${ih}" fill="${bandc[k]}"/>`;
+    s += `<text x="${a + 4}" y="${m.t + 12}">${b.label}</text>`; });
+  const ticks = [0.5, 1, 2, 4, 8, 16, 32].filter(v => Math.log(v) >= lo && Math.log(v) <= hi);
+  ticks.forEach(v => { s += `<line x1="${m.l}" x2="${W - m.r}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)" stroke-width="1"/>`;
+    s += `<text x="${m.l - 6}" y="${y(v) + 4}" text-anchor="end">${v}$</text>`; });
+  for (let yr = 2006; yr <= 2026; yr += 4) { const i = di(yr + '-01-01'); s += `<text x="${x(i)}" y="${H - 6}" text-anchor="middle">${yr}</text>`; }
+  D.series.forEach(se => { let d = ''; se.values.forEach((v, i) => { if (v > 0) d += (d ? 'L' : 'M') + x(i).toFixed(1) + ',' + y(v).toFixed(1); });
+    s += `<path d="${d}" fill="none" stroke="var(--${se.cls === 'bench' ? 'bench' : se.cls})" stroke-width="2" ${se.cls === 'bench' ? 'stroke-dasharray="4 3"' : ''} stroke-linejoin="round"/>`; });
+  s += `<line id="xh" y1="${m.t}" y2="${m.t + ih}" stroke="var(--muted)" stroke-width="1" visibility="hidden"/>`;
+  s += `<rect x="${m.l}" y="${m.t}" width="${iw}" height="${ih}" fill="transparent" id="hit"/></svg>`;
+  root.innerHTML = s;
+  const hit = root.querySelector('#hit'), xh = root.querySelector('#xh');
+  function show(ev){
+    const r = root.getBoundingClientRect(); const px = (ev.touches ? ev.touches[0].clientX : ev.clientX) - r.left;
+    const i = Math.max(0, Math.min(n - 1, Math.round((px - m.l) / iw * (n - 1))));
+    xh.setAttribute('x1', x(i)); xh.setAttribute('x2', x(i)); xh.setAttribute('visibility', 'visible');
+    tip.innerHTML = `<div class="d">${D.dates[i]}</div>` + D.series.map(se => `<div class="r"><span><i style="background:var(--${se.cls === 'bench' ? 'bench' : se.cls})"></i>${se.name}</span><b>${se.values[i].toFixed(2)}$</b></div>`).join('');
+    tip.style.display = 'block';
+    const tw = tip.offsetWidth; let left = x(i) + 18; if (left + tw > W) left = x(i) - tw - 6;
+    tip.style.left = left + 'px'; tip.style.top = (m.t + 40) + 'px';
+  }
+  hit.addEventListener('mousemove', show); hit.addEventListener('touchstart', show, {passive: true}); hit.addEventListener('touchmove', show, {passive: true});
+  hit.addEventListener('mouseleave', () => { tip.style.display = 'none'; xh.setAttribute('visibility', 'hidden'); });
+}
+draw(); let t; window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(draw, 150); });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trade Takip</title>
+<style>
+:root {
+  color-scheme: light;
+  --bg: #f4f3f0; --surface: #ffffff; --surface-2: #f0efec; --line: #e4e2dc;
+  --text: #0b0b0b; --text-2: #52514e; --muted: #7a7974;
+  --s1: #2a78d6; --bench: #8a8984;
+  --good: #0ca30c; --good-ink: #006300; --warn: #fab219; --warn-ink: #7a5200; --bad: #d03b3b; --bad-ink: #a82828;
+  --pos-bg: #dceafb; --neg-bg: #fbe1e0; --buy: #2a78d6; --sell: #d03b3b;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #121211; --surface: #1a1a19; --surface-2: #232321; --line: #34332f;
+    --text: #ffffff; --text-2: #c3c2b7; --muted: #8f8e86; --s1: #3987e5; --bench: #8f8e86;
+    --good-ink: #5fd35f; --warn-ink: #fab219; --bad-ink: #f07a7a; --pos-bg: #183454; --neg-bg: #4a1f1f;
+    --buy: #3987e5; --sell: #e66767;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #121211; --surface: #1a1a19; --surface-2: #232321; --line: #34332f;
+  --text: #ffffff; --text-2: #c3c2b7; --muted: #8f8e86; --s1: #3987e5; --bench: #8f8e86;
+  --good-ink: #5fd35f; --warn-ink: #fab219; --bad-ink: #f07a7a; --pos-bg: #183454; --neg-bg: #4a1f1f;
+  --buy: #3987e5; --sell: #e66767;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, sans-serif; }
+header { position: sticky; top: 0; z-index: 5; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line); }
+.hwrap { max-width: 1100px; margin: 0 auto; padding: 12px 16px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.logo { font-weight: 800; font-size: 19px; letter-spacing: -.01em; }
+.logo span { color: var(--s1); }
+.upd { color: var(--text-2); font-size: 13px; }
+nav { margin-left: auto; display: flex; gap: 6px; flex-wrap: wrap; }
+nav a { font-size: 13px; color: var(--text-2); text-decoration: none; padding: 5px 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); }
+nav a:hover { color: var(--text); }
+main { max-width: 1100px; margin: 0 auto; padding: 18px 16px 60px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.chip { background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; font-size: 13px; color: var(--text-2); }
+.chip b { color: var(--text); }
+.dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
+.dot.good { background: var(--good); } .dot.warn { background: var(--warn); } .dot.bad { background: var(--bad); }
+.kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.kpi { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; }
+.kpi span { color: var(--text-2); font-size: 13px; display: block; }
+.kpi b { display: block; font-size: clamp(20px, 5vw, 26px); line-height: 1.2; font-variant-numeric: tabular-nums; }
+.kpi small { display: block; color: var(--muted); font-size: 12px; }
+section { margin-top: 22px; }
+h2 { font-size: 17px; margin: 0 0 10px; display: flex; align-items: center; gap: 8px; }
+h2 .count { font-size: 12px; background: var(--surface-2); border-radius: 999px; padding: 1px 8px; color: var(--text-2); }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; }
+.grid2 { display: grid; grid-template-columns: 1.1fr .9fr; gap: 16px; }
+.orders { list-style: none; margin: 0; padding: 0; }
+.ord { display: grid; grid-template-columns: auto auto 1fr; gap: 2px 10px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--line); }
+.ord:last-child { border-bottom: 0; }
+.ord .muted { font-size: 13px; }
+.ord .why { grid-column: 2 / 4; font-size: 13px; color: var(--text-2); }
+.pill { font-size: 12px; font-weight: 800; border-radius: 6px; padding: 2px 8px; color: #fff; grid-row: span 2; align-self: start; margin-top: 2px; }
+.pill.buy { background: var(--buy); } .pill.sell { background: var(--sell); }
+.empty { color: var(--text-2); font-size: 14px; padding: 10px 0; }
+.muted { color: var(--text-2); } .small { font-size: 13px; }
+.scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+th, td { padding: 7px 8px; border-bottom: 1px solid var(--line); text-align: left; white-space: nowrap; }
+th { font-size: 12px; color: var(--text-2); font-weight: 600; }
+td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; }
+td.name { font-weight: 700; }
+td.pos { background: var(--pos-bg); } td.neg { background: var(--neg-bg); }
+tbody tr:last-child td { border-bottom: 0; }
+.cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.scard { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; }
+.shead { display: flex; justify-content: space-between; gap: 8px; align-items: center; }
+.srow { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 10px; }
+.srow div span { display: block; font-size: 11.5px; color: var(--text-2); }
+.srow div b { font-variant-numeric: tabular-nums; font-size: 15px; }
+.srow.sub { border-top: 1px dashed var(--line); padding-top: 8px; }
+.srow.sub b { font-size: 13px; }
+.badge { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 999px; border: 1px solid; white-space: nowrap; }
+.badge.good { color: var(--good-ink); border-color: var(--good); } .badge.warn { color: var(--warn-ink); border-color: var(--warn); }
+.badge.bad { color: var(--bad-ink); border-color: var(--bad); }
+.chart { position: relative; }
+.legend { display: flex; gap: 16px; font-size: 13px; color: var(--text-2); margin-bottom: 4px; }
+.legend i { display: inline-block; width: 14px; height: 3px; border-radius: 2px; vertical-align: middle; margin-right: 6px; }
+svg text { fill: var(--muted); font-size: 11px; }
+.tip { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 7px 10px;
+  font-size: 12.5px; box-shadow: 0 4px 16px rgba(0,0,0,.12); display: none; min-width: 170px; }
+.tip .r { display: flex; justify-content: space-between; gap: 10px; } .tip i { display: inline-block; width: 10px; height: 3px; margin-right: 6px; vertical-align: middle; }
+.sigs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.sig { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; }
+.sig .tk { font-size: 20px; }
+.kv { display: grid; grid-template-columns: minmax(120px, 38%) 1fr; gap: 5px 12px; margin: 8px 0 0; font-size: 13.5px; }
+.kv dt { color: var(--text-2); } .kv dd { margin: 0; }
+.scen { display: flex; border-radius: 8px; overflow: hidden; font-size: 12px; font-weight: 600; }
+.scen div { padding: 5px 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.scen .up { background: var(--pos-bg); } .scen .flat { background: var(--surface-2); } .scen .down { background: var(--neg-bg); }
+.brief { font-size: 14.5px; } .brief h3 { font-size: 15px; margin: 14px 0 4px; } .brief p, .brief li { max-width: 80ch; }
+.note { background: var(--surface-2); border-radius: 10px; padding: 10px 14px; font-size: 13px; color: var(--text-2); margin-bottom: 12px; }
+footer { color: var(--muted); font-size: 12px; margin-top: 30px; }
+@media (max-width: 860px) { header { position: static; } .sigs { grid-template-columns: 1fr; } .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } .grid2, .cards { grid-template-columns: 1fr; } nav { margin-left: 0; } }
+</style>
+</head>
+<body>
+<header><div class="hwrap">
+  <div class="logo">Trade<span>Takip</span></div>
+  <div class="upd">Piyasa verisi: <b>{{ASOF}}</b> kapanışı · güncellendi {{UPDATED}}</div>
+  <nav><a href="#sinyaller">Sinyaller</a><a href="#yarin">Yarın</a><a href="#analiz">Analiz</a><a href="#pozisyonlar">Pozisyonlar</a><a href="#stratejiler">Stratejiler</a><a href="#olaylar">Olaylar</a>
+  <a href="Strateji_Arastirma_Raporu.pdf">Tam rapor (PDF)</a></nav>
+</div></header>
+<main>
+<div class="chips">
+  <div class="chip"><span class="dot {{REGIME_CLS}}"></span>Piyasa: <b>{{REGIME}}</b> · SPY {{SPY_CLOSE}} (200g ort. göre {{SPY_VS200}})</div>
+  <div class="chip"><span class="dot {{VIX_CLS}}"></span>Korku endeksi VIX: <b>{{VIX}}</b> ({{VIX_LBL}})</div>
+  <div class="chip">Trend stratejisi: <b>{{TREND}}</b></div>
+  <div class="chip">Dipten alım kapısı: <b>{{RSI_OK}}</b></div>
+  <div class="chip">Sonraki Fed kararı: <b>{{FOMC}}</b></div>
+</div>
+
+<div class="kpis">
+  <div class="kpi"><span>Sanal portföy</span><b>{{TOTAL}}</b><small>100.000 $ ile 9 Eki 2026'da başladı</small></div>
+  <div class="kpi"><span>Başlangıçtan beri</span><b>{{RET}}</b><small>{{DAYS}} işlem günü</small></div>
+  <div class="kpi"><span>Aynı sürede SPY al-tut</span><b>{{SPY_RET}}</b><small>fark: {{DIFF}}</small></div>
+  <div class="kpi"><span>Açık pozisyon</span><b>{{NPOS}}</b><small>en fazla 21 (1 + 10 + 10)</small></div>
+</div>
+
+<section id="sinyaller"><h2>Günün sinyalleri <span class="count">{{N_SIG}}</span></h2>
+<div class="note">Bu kartlar, testlerden geçmiş kuralların bugünkü kapanışa göre ürettiği sinyallerdir. Kişisel yatırım tavsiyesi değildir. Hedef, stop ve olasılıklar aynı kuralın geçmişteki gerçek sonuçlarından hesaplanır, gelecek için garanti değildir. Güven seviyesi, geçmiş örneğin büyüklüğü ve tutarlılığına göre belirlenir; kâr olasılığı anlamına gelmez.</div>
+<div class="sigs">{{SIGNALS}}</div></section>
+
+<section class="grid2" id="yarin">
+  <div><h2>Yarın açılışta yapılacaklar <span class="count">{{N_ORDERS}}</span></h2><div class="panel">{{ORDERS}}</div></div>
+  <div><h2>Sanal portföy ve SPY</h2><div class="panel chart" id="ch"><div class="legend"><span><i style="background:var(--s1)"></i>Sanal portföy</span>
+  <span><i style="background:var(--bench)"></i>SPY al-tut</span></div><div id="chsvg"></div><div class="tip" id="tip"></div></div></div>
+</section>
+
+<section id="pozisyonlar"><h2>Açık pozisyonlar</h2><div class="panel">{{POSITIONS}}</div></section>
+
+<section id="stratejiler"><h2>Stratejiler</h2><div class="cards">{{CARDS}}</div>
+<p class="muted small">"Geçmiş test" satırı stratejinin geriye dönük testteki son dönem performansıdır. Haftada bir yenilenir. Şu anki düşüş, geçmişteki en kötü düşüşü aşarsa durum <b>Alarm</b> olur. Bu, stratejinin bozulmuş olabileceğinin işaretidir.</p></section>
+
+<section class="grid2" id="olaylar">
+  <div><h2>Yaklaşan bilançolar (10 gün)</h2><div class="panel">{{EARN}}</div></div>
+  <div><h2>İzleme listesi: dipten alım adayları</h2><div class="panel">{{WATCH}}</div></div>
+</section>
+
+<section id="analiz"><h2>Günlük piyasa ve haber analizi</h2><div class="panel brief">{{BRIEFING}}</div></section>
+
+<section><h2>İsabet takibi: canlı sonuç ve geçmiş testin beklentisi</h2><div class="panel">{{ACCURACY}}</div>
+<p class="muted small">Gerçekleşen değerler geçmiş testin beklentisinden uzun süre belirgin şekilde kötü kalırsa, strateji bozulmuş olabilir.</p></section>
+
+<section><h2>Kapanan işlemler</h2><div class="panel">{{CLOSED}}</div></section>
+
+<footer>Bu pano gerçek para kullanmaz ve hiçbir aracı kuruma emir göndermez. Sanal işlemler gerçek piyasa fiyatlarıyla, maliyetler düşülerek hesaplanır.
+Her gece (Salı–Cumartesi 01:15) otomatik güncellenir, her cumartesi tüm araştırma ve PDF rapor yeniden üretilir. Yatırım tavsiyesi değildir.</footer>
+</main>
+<script>
+(function(){
+const D = {{CHART}}; const root = document.getElementById('chsvg'), tip = document.getElementById('tip');
+function draw(){
+  const n = D.dates.length, W = root.clientWidth || 500, H = 220, m = {l: 54, r: 10, t: 8, b: 22};
+  if (n < 2) { root.innerHTML = `<div class="empty">Grafik ilk birkaç işlem gününden sonra oluşacak. Şu an ${n} gün var.</div>`; return; }
+  const all = D.port.concat(D.spy); let lo = Math.min(...all), hi = Math.max(...all); const pad = (hi - lo) * 0.1 || 500; lo -= pad; hi += pad;
+  const iw = W - m.l - m.r, ih = H - m.t - m.b, x = i => m.l + i / (n - 1) * iw, y = v => m.t + (1 - (v - lo) / (hi - lo)) * ih;
+  let s = `<svg width="${W}" height="${H}" role="img" aria-label="Sanal portföy ve SPY">`;
+  for (let k = 0; k <= 3; k++) { const v = lo + (hi - lo) * k / 3; s += `<line x1="${m.l}" x2="${W - m.r}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)"/><text x="${m.l - 6}" y="${y(v) + 4}" text-anchor="end">${Math.round(v / 1000)}k$</text>`; }
+  s += `<text x="${m.l}" y="${H - 4}">${D.dates[0]}</text><text x="${W - m.r}" y="${H - 4}" text-anchor="end">${D.dates[n - 1]}</text>`;
+  const path = arr => arr.map((v, i) => (i ? 'L' : 'M') + x(i).toFixed(1) + ',' + y(v).toFixed(1)).join('');
+  s += `<path d="${path(D.spy)}" fill="none" stroke="var(--bench)" stroke-width="2" stroke-dasharray="4 3"/><path d="${path(D.port)}" fill="none" stroke="var(--s1)" stroke-width="2"/>`;
+  s += `<line id="xh" y1="${m.t}" y2="${m.t + ih}" stroke="var(--muted)" visibility="hidden"/><rect id="hit" x="${m.l}" y="${m.t}" width="${iw}" height="${ih}" fill="transparent"/></svg>`;
+  root.innerHTML = s; const hit = root.querySelector('#hit'), xh = root.querySelector('#xh');
+  const fmt = v => v.toLocaleString('tr-TR', {maximumFractionDigits: 0}) + ' $';
+  function show(e){ const r = root.getBoundingClientRect(), px = (e.touches ? e.touches[0].clientX : e.clientX) - r.left;
+    const i = Math.max(0, Math.min(n - 1, Math.round((px - m.l) / iw * (n - 1)))); xh.setAttribute('x1', x(i)); xh.setAttribute('x2', x(i)); xh.setAttribute('visibility', 'visible');
+    tip.innerHTML = `<div class="muted">${D.dates[i]}</div><div class="r"><span><i style="background:var(--s1)"></i>Portföy</span><b>${fmt(D.port[i])}</b></div><div class="r"><span><i style="background:var(--bench)"></i>SPY</span><b>${fmt(D.spy[i])}</b></div>`;
+    tip.style.display = 'block'; let left = x(i) + 22; if (left + tip.offsetWidth > W) left = x(i) - tip.offsetWidth - 2; tip.style.left = left + 'px'; tip.style.top = '40px'; }
+  hit.addEventListener('mousemove', show); hit.addEventListener('touchstart', show, {passive: true}); hit.addEventListener('touchmove', show, {passive: true});
+  hit.addEventListener('mouseleave', () => { tip.style.display = 'none'; xh.setAttribute('visibility', 'hidden'); });
+}
+draw(); let t; addEventListener('resize', () => { clearTimeout(t); t = setTimeout(draw, 150); });
+})();
+</script>
+</body>
+</html>
