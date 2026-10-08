@@ -133,3 +133,32 @@ def accuracy(closed: list[dict], hist: dict) -> list[dict]:
                         exp_win=st["win"], exp_mean=st["mean"],
                         dir_hit=float(((live["ret"] > 0)).mean()) if n else np.nan))
     return out
+
+
+FORECAST = ROOT / "results" / "forecast_log.csv"
+
+
+def forecast_scores(spy_close: pd.Series) -> dict | None:
+    """Günlük analizdeki SPY 5 günlük senaryo olasılıklarını gerçekleşenle karşılaştırır.
+    forecast_log.csv sütunları: date, p_up, p_flat, p_down (ufuk 5 işlem günü, eşik ±%1)."""
+    if not FORECAST.exists():
+        return None
+    f = pd.read_csv(FORECAST, parse_dates=["date"])
+    rows = []
+    s = spy_close.dropna()
+    for r in f.itertuples():
+        i = s.index.searchsorted(r.date) - 1           # tahmin anında bilinen son kapanış
+        if i < 0 or i + 5 >= len(s):
+            continue
+        ret = s.iloc[i + 5] / s.iloc[i] - 1
+        real = "up" if ret > 0.01 else ("down" if ret < -0.01 else "flat")
+        p = {"up": r.p_up, "flat": r.p_flat, "down": r.p_down}
+        tot = sum(p.values()) or 1
+        p = {k: v / tot for k, v in p.items()}
+        brier = sum((p[k] - (1 if k == real else 0)) ** 2 for k in p)
+        rows.append(dict(hit=max(p, key=p.get) == real, brier=brier))
+    if not rows:
+        return dict(n=0, pending=len(f))
+    d = pd.DataFrame(rows)
+    # karşılaştırma: hep 1/3-1/3-1/3 deyen "bilgisiz tahmin" Brier puanı = 0.667
+    return dict(n=len(d), hit=float(d["hit"].mean()), brier=float(d["brier"].mean()), pending=len(f) - len(d))

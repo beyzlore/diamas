@@ -223,6 +223,15 @@ def build(st, pending, ctx, watch, up_e, asof, health, fomc, cs=(), acc=()):
     acc_html = ("<div class='scroll'><table><thead><tr><th>Strateji</th><th class='n'>Kapanan işlem</th><th class='n'>Gerçekleşen kazanma</th>"
                 "<th class='n'>Beklenen kazanma</th><th class='n'>Gerçekleşen ort.</th><th class='n'>Beklenen ort.</th></tr></thead>"
                 f"<tbody>{acc_rows}</tbody></table></div>")
+    fs = SG.forecast_scores(SPY_CLOSE)
+    if fs is None or fs["n"] == 0:
+        pend = 0 if fs is None else fs["pending"]
+        acc_html += (f"<p class='small muted'>Günlük analizdeki SPY senaryo tahminleri: {pend} tahmin kaydedildi, "
+                     "sonuçları 5 işlem günü sonra ölçülmeye başlanacak.</p>")
+    else:
+        acc_html += (f"<p class='small'><b>Günlük analiz tahmin isabeti (SPY, 5 gün):</b> {fs['n']} tahmin, en olası senaryo "
+                     f"%{fs['hit'] * 100:.0f} doğru çıktı. Brier puanı {fs['brier']:.3f}; düşük olan daha iyidir, "
+                     f"hep eşit olasılık veren tahmin 0,667 alır.</p>")
     brief_path = ROOT / "results" / "briefing.html"
     brief_html = brief_path.read_text() if brief_path.exists() else \
         "<div class='empty'>Günlük haber ve senaryo analizi henüz etkinleştirilmedi.</div>"
@@ -263,6 +272,8 @@ def main():
         st, pending, ctx, watch, up_e, asof = E.run(p, earn, vix)
         st_last_price = {t: p.c[t].dropna().iloc[-1] for t in {ps.ticker for ps in st.positions}}
         E_dates = p.dates
+        global SPY_CLOSE
+        SPY_CLOSE = p.c["SPY"]
         health = strategy_health(ROOT / "results" / "daily_final.pkl")
         hist = SG.load_hist()
         cs = SG.cards(pending, p, hist, ctx)
@@ -291,7 +302,7 @@ def E_bday(i):
     return (E_dates[-1] + pd.offsets.BDay(i - len(E_dates) + 1)).strftime("%d.%m")
 
 
-st_last_price, E_dates = {}, None
+st_last_price, E_dates, SPY_CLOSE = {}, None, None
 
 if __name__ == "__main__":
     main()
