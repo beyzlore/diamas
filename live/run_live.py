@@ -81,6 +81,17 @@ def pct(x, d=1, sign=True):
     return f"{prefix}%{abs(x) * 100:.{d}f}"
 
 
+def _sanitize(h: str) -> str:
+    """Bulutta yazılan analiz metnini herkese açık sayfaya koymadan önce temizler:
+    yalnızca basit biçim etiketleri kalır, betik/olay/javascript bağlantıları atılır."""
+    import re
+    h = re.sub(r"(?is)<(script|style|iframe|object|embed|form)[^>]*>.*?</\1>", "", h)
+    h = re.sub(r"(?is)<(script|style|iframe|object|embed|form|meta|link|img|svg)[^>]*/?>", "", h)
+    h = re.sub(r"(?i)\son\w+\s*=\s*(\"[^\"]*\"|'[^']*'|[^\s>]+)", "", h)
+    h = re.sub(r"(?i)href\s*=\s*([\"'])\s*javascript:[^\"']*\1", 'href="#"', h)
+    return h
+
+
 def strategy_health(summary_path: Path):
     """Backtest serisinin son dönem performansı ve geçmişteki en kötü düşüşe göre durum."""
     if not summary_path.exists():
@@ -233,7 +244,7 @@ def build(st, pending, ctx, watch, up_e, asof, health, fomc, cs=(), acc=()):
                      f"%{fs['hit'] * 100:.0f} doğru çıktı. Brier puanı {fs['brier']:.3f}; düşük olan daha iyidir, "
                      f"hep eşit olasılık veren tahmin 0,667 alır.</p>")
     brief_path = ROOT / "results" / "briefing.html"
-    brief_html = brief_path.read_text() if brief_path.exists() else \
+    brief_html = _sanitize(brief_path.read_text()) if brief_path.exists() else \
         "<div class='empty'>Günlük haber ve senaryo analizi henüz etkinleştirilmedi.</div>"
 
     regime = "Yükseliş (boğa)" if ctx["spy_close"] > ctx["spy_sma200"] else "Düşüş (ayı)"
