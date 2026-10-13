@@ -112,57 +112,117 @@ footer { color: var(--muted); font-size: 12px; margin-top: 30px; }
 <body>
 <header><div class="hwrap">
   <div class="logo">Dia<span>mas</span></div>
-  <div class="upd">Piyasa verisi: <b>09.10.2026</b> kapanışı · güncellendi 12.10.2026 11:43</div>
+  <div class="upd">Piyasa verisi: <b>12.10.2026</b> kapanışı · güncellendi 13.10.2026 02:45</div>
   <nav><a href="#sinyaller">Sinyaller</a><a href="#yarin">Yarın</a><a href="#analiz">Analiz</a><a href="#pozisyonlar">Pozisyonlar</a><a href="#stratejiler">Stratejiler</a><a href="#olaylar">Olaylar</a>
   <a href="Strateji_Arastirma_Raporu.pdf">Tam rapor (PDF)</a></nav>
 </div></header>
 <main>
 <div class="chips">
-  <div class="chip"><span class="dot good"></span>Piyasa: <b>Yükseliş (boğa)</b> · SPY 778.57 (200g ort. göre +%8.2)</div>
-  <div class="chip"><span class="dot good"></span>Korku endeksi VIX: <b>14.8</b> (sakin)</div>
+  <div class="chip"><span class="dot good"></span>Piyasa: <b>Yükseliş (boğa)</b> · SPY 778.10 (200g ort. göre +%8.0)</div>
+  <div class="chip"><span class="dot good"></span>Korku endeksi VIX: <b>15.2</b> (normal)</div>
   <div class="chip">Trend stratejisi: <b>SPY tut</b></div>
   <div class="chip">Dipten alım kapısı: <b>Açık</b></div>
   <div class="chip">Sonraki Fed kararı: <b>28.10.2026</b></div>
 </div>
 
 <div class="kpis">
-  <div class="kpi"><span>Sanal portföy</span><b>$99.964</b><small>100.000 $ ile 9 Eki 2026'da başladı</small></div>
-  <div class="kpi"><span>Başlangıçtan beri</span><b>−%0.04</b><small>1 işlem günü</small></div>
-  <div class="kpi"><span>Aynı sürede SPY al-tut</span><b>+%0.30</b><small>fark: −%0.34</small></div>
-  <div class="kpi"><span>Açık pozisyon</span><b>3</b><small>en fazla 21 (1 + 10 + 10)</small></div>
+  <div class="kpi"><span>Sanal portföy</span><b>$99.925</b><small>100.000 $ ile 9 Eki 2026'da başladı</small></div>
+  <div class="kpi"><span>Başlangıçtan beri</span><b>−%0.08</b><small>2 işlem günü</small></div>
+  <div class="kpi"><span>Aynı sürede SPY al-tut</span><b>+%0.24</b><small>fark: −%0.31</small></div>
+  <div class="kpi"><span>Açık pozisyon</span><b>4</b><small>en fazla 21 (1 + 10 + 10)</small></div>
 </div>
 
-<section id="sinyaller"><h2>Günün sinyalleri <span class="count">1</span></h2>
+<section id="sinyaller"><h2>Günün sinyalleri <span class="count">5</span></h2>
 <div class="note">Bu kartlar, testlerden geçmiş kuralların bugünkü kapanışa göre ürettiği sinyallerdir. Kişisel yatırım tavsiyesi değildir. Hedef, stop ve olasılıklar aynı kuralın geçmişteki gerçek sonuçlarından hesaplanır, gelecek için garanti değildir. Güven seviyesi, geçmiş örneğin büyüklüğü ve tutarlılığına göre belirlenir; kâr olasılığı anlamına gelmez.</div>
 <div class="sigs"><div class='sig'>
-<div class='shead'><div><b class='tk'>DE</b> <span class='muted small'>RSI(2) dipten alım + filtreler</span></div>
+<div class='shead'><div><b class='tk'>KLAC</b> <span class='muted small'>RSI(2) dipten alım + filtreler</span></div>
 <span class='badge good'>Güven: Orta-yüksek</span></div>
-<p class='small'><b>Gerekçe:</b> RSI(2) = 1.7, uzun vadeli trend yukarı</p>
+<p class='small'><b>Gerekçe:</b> RSI(2) = 2.3, uzun vadeli trend yukarı</p>
 <dl class='kv'>
-<dt>Giriş</dt><dd>Yarın açılışta (referans son kapanış 620.93)</dd>
+<dt>Giriş</dt><dd>Yarın açılışta (referans son kapanış 190.12)</dd>
 <dt>Çıkış koşulu</dt><dd>Kapanış 5 günlük ortalamanın üstüne çıkınca ertesi açılışta sat; en geç 10 gün sonra sat</dd>
-<dt>Hedef (geçmiş ortalama kazanç)</dt><dd>633.97 (kazanan işlemlerin ortalaması +%2.1)</dd>
-<dt>Olumsuz senaryo / stop</dt><dd>Kuralda sabit stop yok. Geçmişte en kötü %10&#x27;luk sonuç: 604.05 (−%2.7)</dd>
+<dt>Hedef (geçmiş ortalama kazanç)</dt><dd>194.11 (kazanan işlemlerin ortalaması +%2.1)</dd>
+<dt>Olumsuz senaryo / stop</dt><dd>Kuralda sabit stop yok. Geçmişte en kötü %10&#x27;luk sonuç: 184.95 (−%2.7)</dd>
 <dt>Risk / ödül (ort. kazanç ÷ ort. kayıp)</dt><dd>0.87</dd>
 <dt>Model portföyde pay</dt><dd>sermayenin %3.3'i</dd>
 </dl>
 <p class='small muted' style='margin:8px 0 4px'>Geçmişteki 4413 benzer işlemin dağılımı (maliyet sonrası):</p><div class='scen'><div class='up' style='flex:0.444'>Yükseliş 44%</div><div class='flat' style='flex:0.348'>Yatay 35%</div><div class='down' style='flex:0.208'>Düşüş 21%</div></div>
-<p class='small muted'>Bu hissede aynı kural geçmişte 31 kez sinyal verdi: kazanma 77%, ortalama +%0.9.</p>
+<p class='small muted'>Bu hissede aynı kural geçmişte 12 kez sinyal verdi: kazanma 83%, ortalama +%3.0.</p>
+<p class='small'><b>Senaryoyu bozabilecekler:</b> Düşüşün şirkete özgü kötü bir habere bağlı olması (geçici değil kalıcı düşüş), VIX&#x27;in 30&#x27;u aşması, genel piyasada sert satış (spy 200 günlük ortalamanın altına inerse kural yeni alımları durdurur).</p>
+</div><div class='sig'>
+<div class='shead'><div><b class='tk'>QCOM</b> <span class='muted small'>RSI(2) dipten alım + filtreler</span></div>
+<span class='badge good'>Güven: Orta-yüksek</span></div>
+<p class='small'><b>Gerekçe:</b> RSI(2) = 2.7, uzun vadeli trend yukarı</p>
+<dl class='kv'>
+<dt>Giriş</dt><dd>Yarın açılışta (referans son kapanış 174.43)</dd>
+<dt>Çıkış koşulu</dt><dd>Kapanış 5 günlük ortalamanın üstüne çıkınca ertesi açılışta sat; en geç 10 gün sonra sat</dd>
+<dt>Hedef (geçmiş ortalama kazanç)</dt><dd>178.09 (kazanan işlemlerin ortalaması +%2.1)</dd>
+<dt>Olumsuz senaryo / stop</dt><dd>Kuralda sabit stop yok. Geçmişte en kötü %10&#x27;luk sonuç: 169.69 (−%2.7)</dd>
+<dt>Risk / ödül (ort. kazanç ÷ ort. kayıp)</dt><dd>0.87</dd>
+<dt>Model portföyde pay</dt><dd>sermayenin %3.3'i</dd>
+</dl>
+<p class='small muted' style='margin:8px 0 4px'>Geçmişteki 4413 benzer işlemin dağılımı (maliyet sonrası):</p><div class='scen'><div class='up' style='flex:0.444'>Yükseliş 44%</div><div class='flat' style='flex:0.348'>Yatay 35%</div><div class='down' style='flex:0.208'>Düşüş 21%</div></div>
+<p class='small muted'>Bu hissede aynı kural geçmişte 39 kez sinyal verdi: kazanma 69%, ortalama −%0.3.</p>
+<p class='small'><b>Senaryoyu bozabilecekler:</b> Düşüşün şirkete özgü kötü bir habere bağlı olması (geçici değil kalıcı düşüş), VIX&#x27;in 30&#x27;u aşması, genel piyasada sert satış (spy 200 günlük ortalamanın altına inerse kural yeni alımları durdurur).</p>
+</div><div class='sig'>
+<div class='shead'><div><b class='tk'>AMAT</b> <span class='muted small'>RSI(2) dipten alım + filtreler</span></div>
+<span class='badge good'>Güven: Orta-yüksek</span></div>
+<p class='small'><b>Gerekçe:</b> RSI(2) = 2.7, uzun vadeli trend yukarı</p>
+<dl class='kv'>
+<dt>Giriş</dt><dd>Yarın açılışta (referans son kapanış 497.53)</dd>
+<dt>Çıkış koşulu</dt><dd>Kapanış 5 günlük ortalamanın üstüne çıkınca ertesi açılışta sat; en geç 10 gün sonra sat</dd>
+<dt>Hedef (geçmiş ortalama kazanç)</dt><dd>507.98 (kazanan işlemlerin ortalaması +%2.1)</dd>
+<dt>Olumsuz senaryo / stop</dt><dd>Kuralda sabit stop yok. Geçmişte en kötü %10&#x27;luk sonuç: 484.00 (−%2.7)</dd>
+<dt>Risk / ödül (ort. kazanç ÷ ort. kayıp)</dt><dd>0.87</dd>
+<dt>Model portföyde pay</dt><dd>sermayenin %3.3'i</dd>
+</dl>
+<p class='small muted' style='margin:8px 0 4px'>Geçmişteki 4413 benzer işlemin dağılımı (maliyet sonrası):</p><div class='scen'><div class='up' style='flex:0.444'>Yükseliş 44%</div><div class='flat' style='flex:0.348'>Yatay 35%</div><div class='down' style='flex:0.208'>Düşüş 21%</div></div>
+<p class='small muted'>Bu hissede aynı kural geçmişte 36 kez sinyal verdi: kazanma 69%, ortalama +%1.0.</p>
+<p class='small'><b>Senaryoyu bozabilecekler:</b> Düşüşün şirkete özgü kötü bir habere bağlı olması (geçici değil kalıcı düşüş), VIX&#x27;in 30&#x27;u aşması, genel piyasada sert satış (spy 200 günlük ortalamanın altına inerse kural yeni alımları durdurur).</p>
+</div><div class='sig'>
+<div class='shead'><div><b class='tk'>SNDK</b> <span class='muted small'>RSI(2) dipten alım + filtreler</span></div>
+<span class='badge good'>Güven: Orta-yüksek</span></div>
+<p class='small'><b>Gerekçe:</b> RSI(2) = 3.2, uzun vadeli trend yukarı</p>
+<dl class='kv'>
+<dt>Giriş</dt><dd>Yarın açılışta (referans son kapanış 1,487.33)</dd>
+<dt>Çıkış koşulu</dt><dd>Kapanış 5 günlük ortalamanın üstüne çıkınca ertesi açılışta sat; en geç 10 gün sonra sat</dd>
+<dt>Hedef (geçmiş ortalama kazanç)</dt><dd>1,518.56 (kazanan işlemlerin ortalaması +%2.1)</dd>
+<dt>Olumsuz senaryo / stop</dt><dd>Kuralda sabit stop yok. Geçmişte en kötü %10&#x27;luk sonuç: 1,446.90 (−%2.7)</dd>
+<dt>Risk / ödül (ort. kazanç ÷ ort. kayıp)</dt><dd>0.87</dd>
+<dt>Model portföyde pay</dt><dd>sermayenin %3.3'i</dd>
+</dl>
+<p class='small muted' style='margin:8px 0 4px'>Geçmişteki 4413 benzer işlemin dağılımı (maliyet sonrası):</p><div class='scen'><div class='up' style='flex:0.444'>Yükseliş 44%</div><div class='flat' style='flex:0.348'>Yatay 35%</div><div class='down' style='flex:0.208'>Düşüş 21%</div></div>
+
+<p class='small'><b>Senaryoyu bozabilecekler:</b> Düşüşün şirkete özgü kötü bir habere bağlı olması (geçici değil kalıcı düşüş), VIX&#x27;in 30&#x27;u aşması, genel piyasada sert satış (spy 200 günlük ortalamanın altına inerse kural yeni alımları durdurur).</p>
+</div><div class='sig'>
+<div class='shead'><div><b class='tk'>NVDA</b> <span class='muted small'>RSI(2) dipten alım + filtreler</span></div>
+<span class='badge good'>Güven: Orta-yüksek</span></div>
+<p class='small'><b>Gerekçe:</b> RSI(2) = 4.4, uzun vadeli trend yukarı</p>
+<dl class='kv'>
+<dt>Giriş</dt><dd>Yarın açılışta (referans son kapanış 226.32)</dd>
+<dt>Çıkış koşulu</dt><dd>Kapanış 5 günlük ortalamanın üstüne çıkınca ertesi açılışta sat; en geç 10 gün sonra sat</dd>
+<dt>Hedef (geçmiş ortalama kazanç)</dt><dd>231.07 (kazanan işlemlerin ortalaması +%2.1)</dd>
+<dt>Olumsuz senaryo / stop</dt><dd>Kuralda sabit stop yok. Geçmişte en kötü %10&#x27;luk sonuç: 220.17 (−%2.7)</dd>
+<dt>Risk / ödül (ort. kazanç ÷ ort. kayıp)</dt><dd>0.87</dd>
+<dt>Model portföyde pay</dt><dd>sermayenin %3.3'i</dd>
+</dl>
+<p class='small muted' style='margin:8px 0 4px'>Geçmişteki 4413 benzer işlemin dağılımı (maliyet sonrası):</p><div class='scen'><div class='up' style='flex:0.444'>Yükseliş 44%</div><div class='flat' style='flex:0.348'>Yatay 35%</div><div class='down' style='flex:0.208'>Düşüş 21%</div></div>
+<p class='small muted'>Bu hissede aynı kural geçmişte 44 kez sinyal verdi: kazanma 52%, ortalama −%0.1.</p>
 <p class='small'><b>Senaryoyu bozabilecekler:</b> Düşüşün şirkete özgü kötü bir habere bağlı olması (geçici değil kalıcı düşüş), VIX&#x27;in 30&#x27;u aşması, genel piyasada sert satış (spy 200 günlük ortalamanın altına inerse kural yeni alımları durdurur).</p>
 </div></div></section>
 
 <section class="grid2" id="yarin">
-  <div><h2>Yarın açılışta yapılacaklar <span class="count">1</span></h2><div class="panel"><ul class='orders'><li class='ord'><span class='pill buy'>AL</span><b>DE</b><span class='muted'>RSI(2) dipten alım + filtreler</span><span class='why'>RSI(2) = 1.7, uzun vadeli trend yukarı</span></li></ul></div></div>
+  <div><h2>Yarın açılışta yapılacaklar <span class="count">5</span></h2><div class="panel"><ul class='orders'><li class='ord'><span class='pill buy'>AL</span><b>KLAC</b><span class='muted'>RSI(2) dipten alım + filtreler</span><span class='why'>RSI(2) = 2.3, uzun vadeli trend yukarı</span></li><li class='ord'><span class='pill buy'>AL</span><b>QCOM</b><span class='muted'>RSI(2) dipten alım + filtreler</span><span class='why'>RSI(2) = 2.7, uzun vadeli trend yukarı</span></li><li class='ord'><span class='pill buy'>AL</span><b>AMAT</b><span class='muted'>RSI(2) dipten alım + filtreler</span><span class='why'>RSI(2) = 2.7, uzun vadeli trend yukarı</span></li><li class='ord'><span class='pill buy'>AL</span><b>SNDK</b><span class='muted'>RSI(2) dipten alım + filtreler</span><span class='why'>RSI(2) = 3.2, uzun vadeli trend yukarı</span></li><li class='ord'><span class='pill buy'>AL</span><b>NVDA</b><span class='muted'>RSI(2) dipten alım + filtreler</span><span class='why'>RSI(2) = 4.4, uzun vadeli trend yukarı</span></li></ul></div></div>
   <div><h2>Sanal portföy ve SPY</h2><div class="panel chart" id="ch"><div class="legend"><span><i style="background:var(--s1)"></i>Sanal portföy</span>
   <span><i style="background:var(--bench)"></i>SPY al-tut</span></div><div id="chsvg"></div><div class="tip" id="tip"></div></div></div>
 </section>
 
-<section id="pozisyonlar"><h2>Açık pozisyonlar</h2><div class="panel"><div class='scroll'><table><thead><tr><th>Hisse</th><th>Strateji</th><th class='n'>Giriş</th><th class='n'>Giriş fiyatı</th><th class='n'>Son fiyat</th><th class='n'>Değer</th><th class='n'>Kâr/Zarar</th><th>Planlanan çıkış</th></tr></thead><tbody><tr><td class='name'>PEP</td><td>Bilanço sonrası yükseliş</td><td class='n'>09.10</td><td class='n'>126.70</td><td class='n'>125.97</td><td class='n'>$3.313</td><td class='n neg'>−%0.6</td><td>23.10 açılışı</td></tr><tr><td class='name'>INTC</td><td>RSI(2) dipten alım + filtreler</td><td class='n'>09.10</td><td class='n'>108.33</td><td class='n'>104.70</td><td class='n'>$3.221</td><td class='n neg'>−%3.4</td><td>5g ort. üstü kapanışta, en geç 23.10</td></tr><tr><td class='name'>SPY</td><td>Trend takibi (SPY)</td><td class='n'>09.10</td><td class='n'>776.24</td><td class='n'>778.57</td><td class='n'>$33.429</td><td class='n pos'>+%0.3</td><td>trend bozulunca</td></tr></tbody></table></div></div></section>
+<section id="pozisyonlar"><h2>Açık pozisyonlar</h2><div class="panel"><div class='scroll'><table><thead><tr><th>Hisse</th><th>Strateji</th><th class='n'>Giriş</th><th class='n'>Giriş fiyatı</th><th class='n'>Son fiyat</th><th class='n'>Değer</th><th class='n'>Kâr/Zarar</th><th>Planlanan çıkış</th></tr></thead><tbody><tr><td class='name'>PEP</td><td>Bilanço sonrası yükseliş</td><td class='n'>09.10</td><td class='n'>126.70</td><td class='n'>126.68</td><td class='n'>$3.332</td><td class='n neg'>−%0.0</td><td>23.10 açılışı</td></tr><tr><td class='name'>DE</td><td>RSI(2) dipten alım + filtreler</td><td class='n'>12.10</td><td class='n'>620.20</td><td class='n'>632.61</td><td class='n'>$3.388</td><td class='n pos'>+%2.0</td><td>5g ort. üstü kapanışta, en geç 26.10</td></tr><tr><td class='name'>INTC</td><td>RSI(2) dipten alım + filtreler</td><td class='n'>09.10</td><td class='n'>108.33</td><td class='n'>101.35</td><td class='n'>$3.118</td><td class='n neg'>−%6.5</td><td>5g ort. üstü kapanışta, en geç 23.10</td></tr><tr><td class='name'>SPY</td><td>Trend takibi (SPY)</td><td class='n'>09.10</td><td class='n'>776.24</td><td class='n'>778.10</td><td class='n'>$33.409</td><td class='n pos'>+%0.2</td><td>trend bozulunca</td></tr></tbody></table></div></div></section>
 
 <section id="stratejiler"><h2>Stratejiler</h2><div class="cards"><div class='scard'>
 <div class='shead'><b>Trend takibi (SPY)</b><span class='badge good'><span aria-hidden='true'>✓</span> Normal</span></div>
 <p class='muted small'>SPY kapanışı 100 günlük ortalamanın üstündeyse SPY tut, altına inerse nakite geç.</p>
-<div class='srow'><div><span>Sanal bakiye</span><b>$33.429</b></div><div><span>Başlangıçtan beri</span><b>+%0.29</b></div>
+<div class='srow'><div><span>Sanal bakiye</span><b>$33.409</b></div><div><span>Başlangıçtan beri</span><b>+%0.23</b></div>
 <div><span>Açık pozisyon</span><b>1 / 1</b></div></div>
 <div class='srow sub'><div><span>Geçmiş test · son 3 ay</span><b>+%3.5</b></div>
 <div><span>son 12 ay</span><b>+%13.9</b></div>
@@ -170,7 +230,7 @@ footer { color: var(--muted); font-size: 12px; margin-top: 30px; }
 </div><div class='scard'>
 <div class='shead'><b>Bilanço sonrası yükseliş</b><span class='badge good'><span aria-hidden='true'>✓</span> Normal</span></div>
 <p class='muted small'>Kâr beklentisini aşan ve ilk gün yükselen hisseyi ertesi açılışta al, 10 işlem günü sonra sat.</p>
-<div class='srow'><div><span>Sanal bakiye</span><b>$33.313</b></div><div><span>Başlangıçtan beri</span><b>−%0.06</b></div>
+<div class='srow'><div><span>Sanal bakiye</span><b>$33.332</b></div><div><span>Başlangıçtan beri</span><b>−%0.00</b></div>
 <div><span>Açık pozisyon</span><b>1 / 10</b></div></div>
 <div class='srow sub'><div><span>Geçmiş test · son 3 ay</span><b>−%4.3</b></div>
 <div><span>son 12 ay</span><b>−%2.2</b></div>
@@ -178,8 +238,8 @@ footer { color: var(--muted); font-size: 12px; margin-top: 30px; }
 </div><div class='scard'>
 <div class='shead'><b>RSI(2) dipten alım + filtreler</b><span class='badge good'><span aria-hidden='true'>✓</span> Normal</span></div>
 <p class='muted small'>Yükseliş trendindeki likit hisse RSI(2) &lt; 5&#x27;e düşerse al; kapanış 5 günlük ortalamayı geçince veya 10 gün dolunca sat. Piyasa düşüşteyken, VIX ≥ 30 iken ya da yakında bilanço varsa girme.</p>
-<div class='srow'><div><span>Sanal bakiye</span><b>$33.221</b></div><div><span>Başlangıçtan beri</span><b>−%0.34</b></div>
-<div><span>Açık pozisyon</span><b>1 / 10</b></div></div>
+<div class='srow'><div><span>Sanal bakiye</span><b>$33.184</b></div><div><span>Başlangıçtan beri</span><b>−%0.45</b></div>
+<div><span>Açık pozisyon</span><b>2 / 10</b></div></div>
 <div class='srow sub'><div><span>Geçmiş test · son 3 ay</span><b>+%28.9</b></div>
 <div><span>son 12 ay</span><b>+%74.9</b></div>
 <div><span>Şu anki düşüş / geçmişteki en kötü</span><b>%0.0 / −%14</b></div></div>
@@ -187,8 +247,8 @@ footer { color: var(--muted); font-size: 12px; margin-top: 30px; }
 <p class="muted small">"Geçmiş test" satırı stratejinin geriye dönük testteki son dönem performansıdır. Haftada bir yenilenir. Şu anki düşüş, geçmişteki en kötü düşüşü aşarsa durum <b>Alarm</b> olur. Bu, stratejinin bozulmuş olabileceğinin işaretidir.</p></section>
 
 <section class="grid2" id="olaylar">
-  <div><h2>Yaklaşan bilançolar (10 gün)</h2><div class="panel"><div class='scroll'><table><thead><tr><th>Hisse</th><th class='n'>Tarih (NY saati)</th><th>Zaman</th><th class='n'>Beklenen EPS</th></tr></thead><tbody><tr><td class='name'>C</td><td class='n'>13.10 08:00</td><td>açılış öncesi</td><td class='n'>2.62</td></tr><tr><td class='name'>GS</td><td class='n'>13.10 08:00</td><td>açılış öncesi</td><td class='n'>13.09</td></tr><tr><td class='name'>JNJ</td><td class='n'>13.10 08:00</td><td>açılış öncesi</td><td class='n'>2.53</td></tr><tr><td class='name'>JPM</td><td class='n'>13.10 08:00</td><td>açılış öncesi</td><td class='n'>5.94</td></tr><tr><td class='name'>UNH</td><td class='n'>13.10 08:00</td><td>açılış öncesi</td><td class='n'>4.14</td></tr><tr><td class='name'>WFC</td><td class='n'>13.10 08:00</td><td>açılış öncesi</td><td class='n'>1.86</td></tr><tr><td class='name'>BAC</td><td class='n'>14.10 08:00</td><td>açılış öncesi</td><td class='n'>1.10</td></tr><tr><td class='name'>MS</td><td class='n'>14.10 08:00</td><td>açılış öncesi</td><td class='n'>2.92</td></tr></tbody></table></div></div></div>
-  <div><h2>İzleme listesi: dipten alım adayları</h2><div class="panel"><div class='scroll'><table><thead><tr><th>Hisse</th><th class='n'>RSI(2)</th><th class='n'>Kapanış</th><th>Durum</th></tr></thead><tbody><tr><td class='name'>DE</td><td class='n'>1.7</td><td class='n'>620.93</td><td>Sinyal (RSI &lt; 5)</td></tr><tr><td class='name'>INTC</td><td class='n'>3.1</td><td class='n'>104.70</td><td>Sinyal (RSI &lt; 5)</td></tr><tr><td class='name'>QCOM</td><td class='n'>5.0</td><td class='n'>175.50</td><td>Yaklaşıyor</td></tr><tr><td class='name'>LRCX</td><td class='n'>5.3</td><td class='n'>318.84</td><td>Bilanço yakın: girilmez</td></tr><tr><td class='name'>AMAT</td><td class='n'>6.8</td><td class='n'>507.03</td><td>Yaklaşıyor</td></tr><tr><td class='name'>NVDA</td><td class='n'>8.9</td><td class='n'>229.28</td><td>Yaklaşıyor</td></tr><tr><td class='name'>AMD</td><td class='n'>9.9</td><td class='n'>608.10</td><td>Yaklaşıyor</td></tr><tr><td class='name'>TXN</td><td class='n'>10.3</td><td class='n'>283.74</td><td>Bilanço yakın: girilmez</td></tr><tr><td class='name'>SNDK</td><td class='n'>10.3</td><td class='n'>1,581.82</td><td>Yaklaşıyor</td></tr><tr><td class='name'>KLAC</td><td class='n'>11.2</td><td class='n'>195.57</td><td>Yaklaşıyor</td></tr><tr><td class='name'>META</td><td class='n'>12.5</td><td class='n'>718.67</td><td>Yaklaşıyor</td></tr></tbody></table></div></div></div>
+  <div><h2>Yaklaşan bilançolar (10 gün)</h2><div class="panel"><div class='scroll'><table><thead><tr><th>Hisse</th><th class='n'>Tarih (NY saati)</th><th>Zaman</th><th class='n'>Beklenen EPS</th></tr></thead><tbody><tr><td class='name'>WFC</td><td class='n'>13.10 08:00</td><td>açılış öncesi</td><td class='n'>1.86</td></tr><tr><td class='name'>C</td><td class='n'>13.10 08:00</td><td>açılış öncesi</td><td class='n'>2.62</td></tr><tr><td class='name'>UNH</td><td class='n'>13.10 08:00</td><td>açılış öncesi</td><td class='n'>4.14</td></tr><tr><td class='name'>GS</td><td class='n'>13.10 08:00</td><td>açılış öncesi</td><td class='n'>13.09</td></tr><tr><td class='name'>JPM</td><td class='n'>13.10 08:00</td><td>açılış öncesi</td><td class='n'>5.94</td></tr><tr><td class='name'>JNJ</td><td class='n'>13.10 08:00</td><td>açılış öncesi</td><td class='n'>2.53</td></tr><tr><td class='name'>MS</td><td class='n'>14.10 08:00</td><td>açılış öncesi</td><td class='n'>2.92</td></tr><tr><td class='name'>BAC</td><td class='n'>14.10 08:00</td><td>açılış öncesi</td><td class='n'>1.10</td></tr><tr><td class='name'>GE</td><td class='n'>20.10 08:00</td><td>açılış öncesi</td><td class='n'>1.99</td></tr><tr><td class='name'>NFLX</td><td class='n'>20.10 16:00</td><td>kapanış sonrası</td><td class='n'>0.82</td></tr><tr><td class='name'>ISRG</td><td class='n'>20.10 16:00</td><td>kapanış sonrası</td><td class='n'>2.64</td></tr><tr><td class='name'>VRT</td><td class='n'>21.10 08:00</td><td>açılış öncesi</td><td class='n'>1.83</td></tr><tr><td class='name'>T</td><td class='n'>21.10 08:00</td><td>açılış öncesi</td><td class='n'>0.60</td></tr><tr><td class='name'>TMO</td><td class='n'>21.10 08:00</td><td>açılış öncesi</td><td class='n'>6.40</td></tr><tr><td class='name'>NEE</td><td class='n'>21.10 08:00</td><td>açılış öncesi</td><td class='n'>1.18</td></tr><tr><td class='name'>LRCX</td><td class='n'>21.10 16:00</td><td>kapanış sonrası</td><td class='n'>2.18</td></tr><tr><td class='name'>META</td><td class='n'>21.10 16:00</td><td>kapanış sonrası</td><td class='n'>6.25</td></tr><tr><td class='name'>IBM</td><td class='n'>21.10 16:00</td><td>kapanış sonrası</td><td class='n'>2.87</td></tr><tr><td class='name'>TER</td><td class='n'>21.10 16:00</td><td>kapanış sonrası</td><td class='n'>2.05</td></tr><tr><td class='name'>TSLA</td><td class='n'>21.10 16:00</td><td>kapanış sonrası</td><td class='n'>0.45</td></tr><tr><td class='name'>TXN</td><td class='n'>21.10 16:00</td><td>kapanış sonrası</td><td class='n'>2.42</td></tr><tr><td class='name'>PG</td><td class='n'>22.10 08:00</td><td>açılış öncesi</td><td class='n'>1.89</td></tr><tr><td class='name'>VLO</td><td class='n'>22.10 08:00</td><td>açılış öncesi</td><td class='n'>20.27</td></tr></tbody></table></div></div></div>
+  <div><h2>İzleme listesi: dipten alım adayları</h2><div class="panel"><div class='scroll'><table><thead><tr><th>Hisse</th><th class='n'>RSI(2)</th><th class='n'>Kapanış</th><th>Durum</th></tr></thead><tbody><tr><td class='name'>INTC</td><td class='n'>1.5</td><td class='n'>101.35</td><td>Sinyal (RSI &lt; 5)</td></tr><tr><td class='name'>LRCX</td><td class='n'>1.8</td><td class='n'>309.56</td><td>Bilanço yakın: girilmez</td></tr><tr><td class='name'>KLAC</td><td class='n'>2.3</td><td class='n'>190.12</td><td>Sinyal (RSI &lt; 5)</td></tr><tr><td class='name'>QCOM</td><td class='n'>2.7</td><td class='n'>174.43</td><td>Sinyal (RSI &lt; 5)</td></tr><tr><td class='name'>AMAT</td><td class='n'>2.7</td><td class='n'>497.53</td><td>Sinyal (RSI &lt; 5)</td></tr><tr><td class='name'>SNDK</td><td class='n'>3.2</td><td class='n'>1,487.33</td><td>Sinyal (RSI &lt; 5)</td></tr><tr><td class='name'>NVDA</td><td class='n'>4.4</td><td class='n'>226.32</td><td>Sinyal (RSI &lt; 5)</td></tr><tr><td class='name'>AMD</td><td class='n'>5.1</td><td class='n'>594.24</td><td>Yaklaşıyor</td></tr><tr><td class='name'>TXN</td><td class='n'>6.8</td><td class='n'>281.74</td><td>Bilanço yakın: girilmez</td></tr><tr><td class='name'>SMCI</td><td class='n'>7.6</td><td class='n'>39.98</td><td>Yaklaşıyor</td></tr><tr><td class='name'>MU</td><td class='n'>8.7</td><td class='n'>989.04</td><td>Yaklaşıyor</td></tr><tr><td class='name'>TER</td><td class='n'>9.4</td><td class='n'>383.85</td><td>Bilanço yakın: girilmez</td></tr><tr><td class='name'>MRVL</td><td class='n'>10.6</td><td class='n'>265.86</td><td>Yaklaşıyor</td></tr><tr><td class='name'>STX</td><td class='n'>11.4</td><td class='n'>753.25</td><td>Bilanço yakın: girilmez</td></tr></tbody></table></div></div></div>
 </section>
 
 <section id="analiz"><h2>Günlük piyasa ve haber analizi</h2><div class="panel brief"><p><small>Hazırlanma: 12.10.2026 14:45 (Türkiye saati) · Kaynaklar aşağıda · Kişisel yatırım tavsiyesi değildir.</small></p>
@@ -283,7 +343,7 @@ Her gece (Salı–Cumartesi 01:15) otomatik güncellenir, her cumartesi tüm ara
 </main>
 <script>
 (function(){
-const D = {"dates": ["2026-10-09"], "port": [99963.77], "spy": [100300.17]}; const root = document.getElementById('chsvg'), tip = document.getElementById('tip');
+const D = {"dates": ["2026-10-09", "2026-10-12"], "port": [99963.77, 99924.96], "spy": [100300.17, 100239.61]}; const root = document.getElementById('chsvg'), tip = document.getElementById('tip');
 function draw(){
   const n = D.dates.length, W = root.clientWidth || 500, H = 220, m = {l: 54, r: 10, t: 8, b: 22};
   if (n < 2) { root.innerHTML = `<div class="empty">Grafik ilk birkaç işlem gününden sonra oluşacak. Şu an ${n} gün var.</div>`; return; }
