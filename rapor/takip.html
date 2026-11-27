@@ -323,7 +323,7 @@ tbody tr:last-child td { border-bottom: 0; }
   <div class="chip">Sonraki Fed kararı: <b>09.12.2026</b></div>
   <div class="chip">Açık pozisyon: <b>5</b> / 21 · 34 işlem günü · fark SPY'a göre +%4.29</div>
 </div>
-<p class="small muted">Piyasa verisi 25.11.2026 kapanışı · güncellendi 26.11.2026 11:42</p></section>
+<p class="small muted">Piyasa verisi 25.11.2026 kapanışı · güncellendi 27.11.2026 03:44</p></section>
 
 <section id="sinyaller"><h2>Günün sinyalleri <span class="count">1</span></h2>
 <div class="note">Bu kartlar, testlerden geçmiş kuralların bugünkü kapanışa göre ürettiği sinyallerdir. Kişisel yatırım tavsiyesi değildir. Hedef, stop ve olasılıklar aynı kuralın geçmişteki gerçek sonuçlarından hesaplanır, gelecek için garanti değildir. Güven seviyesi, geçmiş örneğin büyüklüğü ve tutarlılığına göre belirlenir; kâr olasılığı anlamına gelmez.</div>
@@ -502,7 +502,7 @@ if (!seen) openTour();
 
 // Bütçe hesaplayıcısı: geçmişin hesabı, tahmin değil
 (function(){
-const C = {"r0": 49.3184, "r1": 50.6669, "d0": "9 Ekim", "d1": "25 Kas\u0131m", "ret": -0.03375943141475324, "spy": -0.0767030541796313, "trades": 113, "sleeves": [{"key": "pead", "name": "Karne Avc\u0131s\u0131", "emoji": "\ud83d\udccb", "share": 0.3333333333333333, "k": 10, "trades": 48, "p10": -0.05833844141901372, "p90": 0.07065954787720798, "mean": 0.007763523595524195}, {"key": "rsi2", "name": "\u0130ndirim Avc\u0131s\u0131", "emoji": "\ud83c\udff7\ufe0f", "share": 0.3333333333333333, "k": 10, "trades": 59, "p10": -0.027276447809895556, "p90": 0.03453995172356154, "mean": 0.005687821184950939}, {"key": "trend", "name": "R\u00fczg\u00e2r Takip\u00e7isi", "emoji": "\u26f5", "share": 0.3333333333333333, "k": 1, "trades": 6, "p10": -0.02198879566101229, "p90": 0.09088554705548756, "mean": 0.018938187330477783}], "prices": [172.22, 235.65, 316.74, 94.69, 356.14]};
+const C = {"r0": 49.3184, "r1": 50.6669, "d0": "9 Ekim", "d1": "25 Kas\u0131m", "ret": -0.0337594314009223, "spy": -0.0767030541796313, "trades": 113, "sleeves": [{"key": "pead", "name": "Karne Avc\u0131s\u0131", "emoji": "\ud83d\udccb", "share": 0.3333333333333333, "k": 10, "trades": 48, "p10": -0.05833844141901372, "p90": 0.07065954787720798, "mean": 0.007763523595524195}, {"key": "rsi2", "name": "\u0130ndirim Avc\u0131s\u0131", "emoji": "\ud83c\udff7\ufe0f", "share": 0.3333333333333333, "k": 10, "trades": 59, "p10": -0.027276447809895556, "p90": 0.03453995172356154, "mean": 0.005687821184950939}, {"key": "trend", "name": "R\u00fczg\u00e2r Takip\u00e7isi", "emoji": "\u26f5", "share": 0.3333333333333333, "k": 1, "trades": 6, "p10": -0.02198879566101229, "p90": 0.09088554705548756, "mean": 0.018938187330477783}], "prices": [172.22, 235.65, 316.74, 94.69, 356.14]};
 const box = document.getElementById('calc'), out = document.getElementById('cOut');
 if (!C) { box.innerHTML = '<div class="empty">Dolar/TL kuru alınamadığı için hesaplayıcı bu gece çalışmadı.</div>'; return; }
 const iB = document.getElementById('cBudget'), iF = document.getElementById('cFee'), iX = document.getElementById('cFx');
